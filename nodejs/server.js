@@ -6,3 +6,5 @@ var httpServer = http.createServer(function(req, res) {
 });
 
 httpServer.listen(8080);
+
+var io = require('socket.io').listen(httpServer);
