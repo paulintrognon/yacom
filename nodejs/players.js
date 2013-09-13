@@ -15,5 +15,11 @@ var generatePlayer = function(name, map) {
 exports.generatePlayer = generatePlayer;
 
 function generatePos(map) {
-	return {x:0, y:0};
+
+
+
+	return {
+		x: Helpers.randWithout(1, 9, [3, 7, 9]),
+		y: Helpers.randWithout(1, 9, [3, 7, 9])
+	};
 }

@@ -2,15 +2,15 @@ var generateMap = function(size) {
 
 	var map = {
 		size: size,
-		terrains: [],
+		terrains: {},
 		players: {}
 	};
 
-	for(i = 0 ; i < size ; i++) {
+	for(i = 1 ; i <= size ; i++) {
 
-		map.terrains[i] = [];
+		map.terrains[i] = {};
 
-		for(j = 0 ; j < size ; j++) {
+		for(j = 1 ; j <= size ; j++) {
 
 			map.terrains[i][j] = generateTerrain();
 
@@ -19,6 +19,7 @@ var generateMap = function(size) {
 
 	return map;
 };
+
 exports.generateMap = generateMap;
 
 function generateTerrain() {

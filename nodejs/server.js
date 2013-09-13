@@ -2,7 +2,8 @@
  *  SETTING UP SERVER *
  *************************/
 
-var _ = require('underscore');
+global._ = require('underscore');
+global.Helpers = require('./helpers');
 
 var httpModule = require('http');
 
@@ -33,6 +34,7 @@ io.sockets.on('connection', function(socket) {
 	if(map == null) {
 		map = mapModule.generateMap(9);
 	}
+	socket.emit('loadMap', map.terrains);
 
 	var player = null;
 
@@ -43,7 +45,7 @@ io.sockets.on('connection', function(socket) {
 		}
 		else {
 			player = playersModule.generatePlayer(name, map);
-			map.players[name] = player;
+//			map.players[name] = player;
 		}
 
 		socket.emit('loadPlayer', player);
