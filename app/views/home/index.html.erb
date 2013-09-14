@@ -3,11 +3,6 @@
   <button id="connect">Connexion</button>
 </p>
 
-<% (1..9).each do |y| %>
-	<% (1..9).each do |x| %>
-		<div id="board-square-<%= x %>-<%= y %>" class="board-square void"></div>
-	<% end %>
-	<br />
-<% end %>
+<table id="game-board" class="board"></table>
 
 <script src="http://localhost:8080/socket.io/socket.io.js"></script>
