@@ -5,8 +5,8 @@ exports.generateSoldier = (soldierName) ->
 	baseLifePoints: 50
 	baseSight: 4
 	weapon: {
-		name: 'berreta92'
-		nameDisplay: 'Berreta 92'
+		name: 'beretta92'
+		nameDisplay: 'Beretta 92'
 		damage: 7
 	}
 	position: YACOM.map.generatePos()

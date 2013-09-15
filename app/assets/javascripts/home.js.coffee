@@ -58,7 +58,7 @@ renderMap = (soldier) ->
 				if(square.soldier)
 					$img = $('<img>', {
 						id: square.soldier.id+'-smiley',
-						src: '/img/weapons/beretta92/beretta92-static.gif'
+						src: '/img/weapons/'+square.soldier.weapon.name+'/'+square.soldier.weapon.name+'-static.gif'
 						class: 'soldier-smiley'
 					})
 					$td.append($img)
