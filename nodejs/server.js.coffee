@@ -27,22 +27,21 @@ io = require('socket.io').listen(httpServer)
 mapModule = require('./map.js.coffee');
 soldiersModule = require('./soldiers.js.coffee');
 
-YACOM =
+global.YACOM =
 	map: mapModule.generateMap(50, 50)
 	soldiers: {}
 
 io.sockets.on 'connection', (socket) ->
 
-	soldierName = null
+	soldierId = null
 
 	# soldier LOGIN -----------------------
 	socket.on 'login', (name) ->
-		soldierName = name
 
-		if !YACOM.soldiers[soldierName]
-			YACOM.soldiers[soldierName] = soldiersModule.generateSoldier(soldierName)
+		soldierId = name
 
+		if !YACOM.soldiers[soldierId]
+			YACOM.soldiers[soldierId] = new soldiersModule.generateSoldier(name)
+			YACOM.map.addSoldier(YACOM.soldiers[soldierId])
 
-		socket.emit 'loadGame',
-			soldier: YACOM.soldiers[name]
-			map: YACOM.map.getSoldierSight(YACOM.soldiers[soldierName])
+		socket.emit 'loadSoldier', YACOM.soldiers[soldierId].getSelfClientSoldier()

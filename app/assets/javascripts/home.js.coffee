@@ -4,27 +4,71 @@ $ ->
 
 	socket = io.connect('http://localhost:8080')
 
-	$('#connect').click -> socket.emit('login')
+	$('#connect').click -> socket.emit('login', $('#name').val())
 
-	socket.on 'loadGame', (gameInfo) ->
-		map = gameInfo.map
-		soldier = gameInfo.soldier
+	socket.on 'loadSoldier', (soldier) ->
 
-		console.log(map);
-		renderMap(map, soldier)
+		renderMap(soldier)
 
+# RENDERING MAP #
+renderMap = (soldier) ->
 
-renderMap = (map, soldier) ->
-	boardSize = 6
-	$boardElem = $('#game-board');
-	$boardElem.empty()
-	for x in [(soldier.position.x - boardSize)..(soldier.position.x + boardSize)] by 1
+	map = soldier.mapSight
+	console.log(map)
+
+	# --- COORDNATES MATH --- #
+
+	# board size : 2 defaults size + custom : choice left to user
+	boardSize = 4
+
+	#Calculating coords range for local map
+	fromY = soldier.position.y - boardSize
+	toY = soldier.position.y + boardSize
+	fromX = soldier.position.x - boardSize
+	toX = soldier.position.x + boardSize
+
+	# --- GENERATING BOARD --- #
+
+	#Getting board element and emptying it
+	$board = $('#game-board');
+	$board.empty()
+
+	#Generating board borders (coordonates information)
+	$firstRow = $("<tr>", {class: "board-row"});
+	$firstRow.append("<th></th>")
+	for x in [fromX..toX] by 1
+		$firstRow.append("<th>#{x}</th>")
+
+	$firstRow.append("<th></th>")
+	$board.append($firstRow);
+
+	for y in [fromY..toY] by 1
 		$row = $("<tr>", {class: "board-row"});
-		for y in [(soldier.position.y - boardSize)..(soldier.position.y + boardSize)] by 1
-			$div = $("<td>", {id: 'board-square-'+x+'-'+y, class: "board-square"});
+		$row.append("<th>#{y}</th>")
+
+		for x in [fromX..toX] by 1
+			$td = $("<td>", {id: 'board-square-'+x+'-'+y, class: "board-square"});
+
+			#terrain class lookup
 			if(map.squares[x+';'+y])
-				$div.addClass(map.squares[x+';'+y].terrain.name);
+				square = map.squares[x+';'+y];
+				$td.addClass(square.terrain.name);
+
+				#soldier lookup
+				if(square.soldier)
+					$img = $('<img>', {
+						id: square.soldier.id+'-smiley',
+						src: '/img/weapons/beretta92/beretta92-static.gif'
+						class: 'soldier-smiley'
+					})
+					$td.append($img)
+
+			else if(x < 1 || y < 1 || x > map.width || y > map.height)
+				$td.addClass('void');
 			else
-				$div.addClass('void');
-			$row.append($div);
-		$boardElem.append($row);
+				$td.addClass('unknown');
+
+			$row.append($td)
+		$row.append("<th>#{y}</th>")
+		$board.append($row)
+	$board.append($firstRow.clone());

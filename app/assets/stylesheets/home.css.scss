@@ -1,48 +1,41 @@
 
-$squareSize: 32px;
-/*
-.board {
-  border-right: 1px solid #000000;
-  border-left: 1px solid #000000;
-  border-bottom: 1px solid #000000;
-
-  .board-square {
-    display: inline-block;
-    border-right: 1px solid #000000;
-    width: $squareSize;
-    height: $squareSize;
-  }
-
-  .board-row {
-    height: $squareSize;
-    border-top: 1px solid #000000;
-  }
-}
-*/
+$squareSize: 50px;
 
 .board {
 
-  border: 1px solid #000000;
+	border: 1px solid #000000;
 
-  .board-square {
-    border: 1px solid #000000;
-    width: $squareSize;
-    height: $squareSize;
-  }
+	th {
+		border: 1px solid #000000;
+	}
+
+	.board-square {
+		border: 1px solid #000000;
+		width: $squareSize;
+		height: $squareSize;
+
+		.soldier-smiley {
+			width: 100%;
+		}
+	}
 }
 
 .grass {
-  background-color: #5F5;
+	background-color: #5F5;
 }
 
 .wood {
-  background-color: #050;
+	background-color: #050;
 }
 
 .water {
-  background-color: #00B;
+	background-color: #00B;
 }
 
 .void {
-  background-color: #999;
+	background-color: #555;
+}
+
+.unknown {
+	background-color: #AAA;
 }
